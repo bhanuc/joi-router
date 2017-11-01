@@ -6,31 +6,6 @@ Differences- Updated modules and new function signature for concise route defini
 
 Easy, rich and fully validated [koa][] routing.
 
-[![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![David deps][david-image]][david-url]
-[![npm download][download-image]][download-url]
-
-[npm-image]: https://img.shields.io/npm/v/koa-joi-router.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/koa-joi-router
-[travis-image]: https://img.shields.io/travis/koajs/joi-router.svg?style=flat-square
-[travis-url]: https://travis-ci.org/koajs/joi-router
-[codecov-image]: https://codecov.io/github/koajs/joi-router/coverage.svg?branch=master
-[codecov-url]: https://codecov.io/github/koajs/joi-router?branch=master
-[david-image]: https://img.shields.io/david/koajs/joi-router.svg?style=flat-square
-[david-url]: https://david-dm.org/koajs/joi-router
-[download-image]: https://img.shields.io/npm/dm/koa-joi-router.svg?style=flat-square
-[download-url]: https://npmjs.org/package/koa-joi-router
-[co]: https://github.com/tj/co
-[koa]: http://koajs.com
-[co-body]: https://github.com/visionmedia/co-body
-[await-busboy]: https://github.com/aheckmann/await-busboy
-[joi]: https://github.com/hapijs/joi
-[koa-router]: https://github.com/alexmingoia/koa-router
-[generate API documentation]: https://github.com/a-s-o/koa-docs
-[path-to-regexp]: https://github.com/pillarjs/path-to-regexp
-
 #### Features:
 
 - built in input validation using [joi][]
