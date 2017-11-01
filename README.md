@@ -1,5 +1,9 @@
 #joi-router
 
+Forked from https://www.npmjs.com/package/koa-joi-router, 
+
+Differences- Updated modules and new function signature for concise route definitions
+
 Easy, rich and fully validated [koa][] routing.
 
 [![NPM version][npm-image]][npm-url]
@@ -46,13 +50,13 @@ Easy, rich and fully validated [koa][] routing.
 
 #### Node compatibility
 
-NodeJS `>= 7.6` is required.
+NodeJS `>= 8.3` is required.
 
 #### Example
 
 ```js
 const koa = require('koa');
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const Joi = router.Joi;
 
 const public = router();
@@ -60,6 +64,39 @@ const public = router();
 public.get('/', async (ctx) => {
   ctx.body = 'hello joi-router!';
 });
+
+const misc = {
+  validate: {
+    body: {
+      name: Joi.string().max(100),
+      email: Joi.string().lowercase().email(),
+      password: Joi.string().max(100),
+      _csrf: Joi.string().token()
+    },
+    type: 'form',
+    output: {
+      200: {
+        body: {
+          userId: Joi.string(),
+          name: Joi.string()
+        }
+      }
+    }
+  },
+  meta: { // this is ignored but useful for doc generators etc
+       desc: 'We can use this for docs generation.'
+       produces: ['application/json']
+       model: {} // response object definition
+  }
+}
+
+public.joiGet('/', async (ctx) => {
+  ctx.body = 'hello joi-router!';
+}, misc);
+
+public.joiPost('/', async (ctx) => {
+  ctx.body = 'hello joi-router!';
+}, misc);
 
 public.route({
   method: 'post',
@@ -99,7 +136,7 @@ The design is such that you construct multiple router instances, one for
 each section of your application which you then add as koa middleware.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const Joi = router.Joi;
 
 const pub = router();
@@ -128,7 +165,7 @@ release of Joi into the router.
 
 ```js
 const koa = require('koa');
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const Joi = router.Joi;
 ```
 
@@ -140,7 +177,7 @@ Adds a new route to the router. `route()` accepts an object or array of objects
 describing route behavior.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const public = router();
 
 public.route({
@@ -168,7 +205,7 @@ public.route({
 or
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const public = router();
 
 const routes = [
@@ -210,7 +247,7 @@ public.route(routes);
 as well.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const admin = router();
 
 // signature: router.method(path [, config], handler [, handler])
@@ -227,7 +264,7 @@ When you need to run middleware before all routes, OR, if you just need to run
 middleware before a specific path, this method is for you.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const users = router();
 
 users.get('/something', async (ctx, next) => {
@@ -250,7 +287,7 @@ the path matches.
 To run middleware before a specific route, also pass the optional `path`:
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const users = router();
 
 users.get('/:id', handler);
@@ -262,7 +299,7 @@ users.use('/:id', runThisBeforeHandler);
 Defines a route prefix for all defined routes. This is handy in "mounting" scenarios.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const users = router();
 
 users.get('/:id', handler);
@@ -280,7 +317,7 @@ Generates routing middleware to be used with `koa`. If this middleware is
 never added to your `koa` application, your routes will not work.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const public = router();
 
 public.get('/home', homepage);
@@ -300,7 +337,7 @@ not have an affect on your running application but is available
 to meet your introspection needs.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const public = router();
 public.get('/hello', async (ctx) => {
   console.log(ctx.state.route);
@@ -546,7 +583,7 @@ This is helpful when you'd like to introspect the previous definitions and
 take action e.g. to [generate API documentation][] etc.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const admin = router();
 admin.post('/thing', { validate: { type: 'multipart' }}, handler);
 
@@ -564,7 +601,7 @@ Because [path-to-regexp][]
 supports it, so do we!
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const admin = router();
 admin.get('/blog/:year(\\d{4})-:day(\\d{2})-:article(\\d{3})', async (ctx, next) => { 
  console.log(ctx.request.params) // { year: '2017', day: '01', article: '011' } 
@@ -576,7 +613,7 @@ admin.get('/blog/:year(\\d{4})-:day(\\d{2})-:article(\\d{3})', async (ctx, next)
 Defining a route for multiple HTTP methods in a single shot is supported.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const admin = router();
 admin.route({
   path: '/',
@@ -591,7 +628,7 @@ Often times you may need to add additional, route specific middleware to a
 single route.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const admin = router();
 admin.route({
   path: '/',
@@ -606,7 +643,7 @@ You may want to bundle and nest middleware in different ways for reuse and
 organization purposes.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const admin = router();
 const commonMiddleware = [ yourMiddleware, someOtherMiddleware ];
 admin.route({
@@ -619,7 +656,7 @@ admin.route({
 This also works with the .get(),post(),put(),delete(), etc HTTP method helpers.
 
 ```js
-const router = require('koa-joi-router');
+const router = require('koa-joi-router-2');
 const admin = router();
 const commonMiddleware = [ yourMiddleware, someOtherMiddleware ];
 admin.get('/', commonMiddleware, yourHandler);

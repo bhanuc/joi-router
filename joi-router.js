@@ -134,6 +134,48 @@ Router.prototype._addRoute = function addRoute(spec) {
 };
 
 /**
+ * Adds a get route to this router, storing the route
+ * in `this.routes`.
+ *
+ * @param {String} path
+ * @param {async function} handler
+ * @param {Object} misc
+ * @api private
+ */
+
+Router.prototype.joiGet = function joiGet(path, handler, misc) {
+  const spec = {
+    method: 'get',
+    path,
+    handler,
+    validate: misc.validate,
+    meta: misc.meta
+  };
+  this._addRoute(spec);
+};
+
+/**
+ * Adds a post route to this router, storing the route
+ * in `this.routes`.
+ *
+ * @param {String} path
+ * @param {async function} handler
+ * @param {Object} misc
+ * @api private
+ */
+
+Router.prototype.joiPost = function joiGet(path, handler, misc) {
+  const spec = {
+    method: 'post',
+    path,
+    handler,
+    validate: misc.validate,
+    meta: misc.meta
+  };
+  this._addRoute(spec);
+};
+
+/**
  * Validate the spec passed to route()
  *
  * @param {Object} spec
@@ -447,7 +489,7 @@ function validateInput(prop, ctx, validate) {
 methods.forEach((method) => {
   method = method.toLowerCase();
 
-  Router.prototype[method] = function(path) {
+  Router.prototype[method] = function (path) {
     // path, handler1, handler2, ...
     // path, config, handler1
     // path, config, handler1, handler2, ...

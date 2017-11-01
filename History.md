@@ -1,4 +1,13 @@
 
+5.0.1 / 2017-03-09
+==================
+
+ * breaking; now requires node >= 8.3
+ * deps; updated
+ * docs; updated
+ * Added new signature functions for get and post
+
+ 
 5.0.0 / 2017-03-09
 ==================
 
